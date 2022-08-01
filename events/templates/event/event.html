@@ -1,0 +1,45 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    events
+    {% endblock %}
+{% block body_block %}
+{% block content %}
+
+
+{% if happens %}
+<div class="container">
+          <h5 class="center" style=" margin-top: 1.5%; margin-bottom: 0.001%; font-family: 'Oswald',Bold; font-size: 40px">ALL EVENTS</h5>
+
+      {% for happen in happens %}
+<div class="col s12 m4 offset-m4 l6 offset-l3">
+
+        <div class="card-panel white lighten-5 z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s6">
+              {% if happen.photo %}
+                                  <img src="{{ happen.photo.url }}" alt="" class="square responsive-img">
+                   {% endif %} <!-- notice the "circle" class -->
+            </div>
+            <div class="col s12">
+                <h5 class="center" style=" margin-top: 1.5%; margin-bottom: 0.001%; font-family: 'Oswald',Bold; font-size: 40px">{{ happen.title }}</h5>
+
+                 <p class="center brown-text" style="font-family: 'Oswald',Bold; font-size: 30px "><i class="fa fa-calendar" style="font-size:50px; color: blue"></i>{{ happen.day }}</p>
+        <p class="center brown-text" style="font-family: 'Oswald',Bold; font-size: 25px "><i class="fa fa-clock-o" style="font-size:40px"></i>{{ happen.start }}-{{ happen.end }}</p>
+
+                    <span class="light black-text center" style="font-family: 'Playfair Display', Regular ; font-size: 17px">{{ happen.body|truncatewords:40 }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+{% endfor %}
+</div>
+    {% endif %}
+
+{% endblock %}
+{% include "college/pagination.html" with page=happens %}
+{% endblock %}
+
+
+

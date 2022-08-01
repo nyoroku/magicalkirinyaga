@@ -1,0 +1,54 @@
+{% extends "tour/main.html" %}
+{% block title %}Edit For Eating/Drinking{% endblock %}
+{% block content %}
+<h1 style="text-align: center">
+
+Edit Place "{{ object.name }}"
+
+</h1>
+<div class="module">
+
+<form action="." method="post" id="" data-models-url="#" novalidate enctype="multipart/form-data">
+    <div class="grid-container">
+        <h2>Place info</h2>
+      <table style="background-color: grey">
+          {{ form.media }}
+          {{ form.media.js }}
+{{ form.as_table }}
+      </table>
+        <h2>Edit Photos</h2>
+
+
+    <table>
+{{ eatimages_formset }}
+{{ placeimages_formset.management_form }}
+    </table>
+          <h2>Edit Menu</h2>
+
+
+    <table>
+{{ menu_formset }}
+{{ menu_formset.management_form }}
+    </table>
+         <h2>Edit Opening Hours</h2>
+
+
+    <table>
+{{ hours_formset }}
+{{ hours_formset.management_form }}
+    </table>
+
+          <button type="submit" class="primary button expanded search-button">
+      Save Place
+    </button>
+
+
+    </div>
+{% csrf_token %}
+
+</form>
+
+</div>
+
+
+{% endblock %}

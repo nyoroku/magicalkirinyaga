@@ -1,0 +1,122 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title_block %}
+ {% load humanize %}
+    {% load templatehelper %}
+   Stay
+    {% endblock %}
+{% block body_block %}
+
+{% block content %}
+{% if stays %}
+
+<div class="contain">
+
+
+<h4 style="font-family: Merriweather, serif; font-weight: bold; font-size: 20px; color: black">{{ total_stays}} Place{{ total_stays|pluralize }} to stay found </h4>
+<section>
+    <ul class="dropdown menu" data-dropdown-menu id="primary-menu" style="margin-left: 5px">
+  <li>
+      <a href="#"> <button class="hollow button primary extended"> Sort By</button></a>
+
+    <ul class="menu">
+      <li><a href="?order=name">Name(A-Z)</a></li>
+      <li><a href="?order=-name">Name(Z-A)</a></li>
+
+    </ul>
+
+  </li>
+
+</ul>
+</section>
+
+
+{% if tag %}
+<h2 style="text-align: center">Style tagged with "{{ tag.name }}"</h2>
+    <h1 style="font-family: Merriweather, serif; font-weight: bold; font-size: 20px; color: black">{{ total_products }} styles{{ total_products|pluralize }} found </h1>
+{% endif %}
+<div class="grid-x grid-margin-x">
+       {% for stay in stays%}
+        <div class="cell large-2 small-12 medium-4">
+        <div class="news-card-tag">
+
+
+</div>
+ <div class="card-image">
+
+      {% if stay.photo %}
+          <a href="{{ stay.get_absolute_url }}"><img src="{{ stay.photo.url }}"></a>
+      {% endif %}
+
+  </div>
+<div class="card-flex-article card">
+
+  <div class="card-section">
+
+      <h3 class="article-title"><a href="{{ stay.get_absolute_url }}"> {{ stay.name }}</a></h3>
+    <div class="article-details">
+
+    </div>
+
+
+  </div>
+<p class="article-summary" style="font-family: Merriweather; color: darkblue">{{ stay.description|truncatewords:30 }}</p>
+</div>
+
+
+    </div>
+{% endfor %}
+</div>
+</div>
+{% else %}
+<p>No Entry Yet</p>
+{% endif %}
+
+    {% if stays.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if stays.has_previous %}
+     <li class="pagination-previous"><a class="pagination-pointed-button" href="?{% query_transform request page=stays.previous_page_number %}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  stays.paginator.page_range %}
+    {% if stays.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?{% query_transform request page=i %}">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if stays.has_next %}
+   <li class="pagination-next"><a class="pagination-pointed-button" href="?{% query_transform request page=stays.next_page_number %}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% if tag.name in tag %}
+        {% if products.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if products.has_previous %}
+     <li class="pagination-previous"><a class="pagination-pointed-button" href="?{% query_transform request page=products.previous_page_number %}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  products.paginator.page_range %}
+    {% if products.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?{% query_transform request page=i %}">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if products.has_next %}
+<li class="pagination-next"><a class="pagination-pointed-button" href="?{% query_transform request page=products.next_page_number %}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% endif %}
+
+
+
+
+
+{% endblock %}
+
+{% endblock %}

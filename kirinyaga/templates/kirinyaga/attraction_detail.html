@@ -1,0 +1,116 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title %}{{ attraction.name }}{% endblock %}
+{% block content %}
+
+
+
+
+<div class="grid-container fluid">
+<div class="wording">
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 25px; color: black; font-weight: bold">{{ attraction.name }}</h5>
+</div>
+<div class="grid-x grid-margin-x">
+
+
+<div class="cell large-9 small-12 medium-12">
+<div>
+<ul class="pgwSlider">
+     {% for photo in image %}
+     {% if photo.image %}
+    <li><img class="img-responsive" src="{{ photo.image.url }}"></li>
+    {% endif %}
+ {% endfor %}
+
+</ul>
+<div>
+
+
+<bdi class="descip" style="padding:20px; position: inherit; float: none;">
+
+
+</bdi>
+<div class="md-tabs">
+  <div class="mobile-nav-bar title-bar">
+
+    <div class="title-bar-center">
+      <span class="title-bar-text">{{ attraction.name }} Information</span>
+    </div>
+
+  </div>
+
+  <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
+    <li class="tabs-title is-active"><a href="#panel1c" aria-selected="true">Description</a></li>
+    <li class="tabs-title"><a href="#panel2c">Highlights</a></li>
+    <li class="tabs-title"><a href="#panel3c">Vitals</a></li>
+
+
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="collapsing-tabs">
+    <div class="tabs-panel is-active" id="panel1c">
+      <p class="p">
+          {{ attraction.detail }}
+      </p>
+    </div>
+  <div class="tabs-panel" id="panel2c">
+      {% for h in highlight %}
+          <ul style="list-style-type: none">
+              <li style="float: left;  width: 33.3333333%"><i class="fa fa-star " style="color:#002C3E" aria-hidden="true"></i> {{ h.title }}</li>
+          </ul>
+        {% endfor %}
+    </div>
+    <div class="tabs-panel" id="panel3c">
+      {% for v in vital %}
+          <ul style="list-style-type: none">
+              <li style="float: left;  width: 33.3333333%"><i class="fa fa-star " style="color:#002C3E" aria-hidden="true"></i> {{ v.title }}</li>
+          </ul>
+        {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="cell large-6 medium-12">
+
+    <br>
+
+</div><br>
+{% if similar_attractions %}
+    <div class="content">
+<div class="wording">
+
+<h5 style=" margin-left:25px; font-family:'Merriweather', bold; font-size: 16px; color: darkblue; font-weight: bold">More Attractions</h5>
+</div>
+
+<div class="multiple-items">
+    {% for attractions in similar_attractions %}
+<div class="card-flex-article card flex-container">
+ <a href="{{attraction.get_absolute_url}}">
+  <div class="card-image">
+    <img src="{{attraction.photo.url}}">
+
+  </div>
+  <div class="card-section">
+      <h3 class="article-title" style="color: black"> {{attraction.name}}</h3>
+
+
+  </div>
+ </a>
+  </div>
+    {% endfor %}
+
+    </div>
+    </div>
+{% endif %}
+
+
+
+
+{% endblock %}
+
+

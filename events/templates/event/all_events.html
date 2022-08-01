@@ -1,0 +1,129 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title %}
+    {% if tag.slug %}
+    {{ tag.slug|capfirst }} Events
+    {% else %}
+ All Events
+    {% endif %}
+    {% endblock %}
+ {% load humanize %}
+    {% load templatehelper %}
+
+{% block body_block %}
+
+{% block content %}
+{% if events %}
+
+<div class="contain">
+
+
+<h4 style="font-family: Merriweather, serif; font-weight: bold; font-size: 20px; color: black">{{ total_events}} Event{{ total_events|pluralize }} Found</h4>
+<section>
+    <ul class="dropdown menu" data-dropdown-menu id="primary-menu" style="margin-left: 5px">
+  <li>
+      <a href="#"> <button class="hollow button primary extended"> Sort By</button></a>
+
+    <ul class="menu">
+      <li><a href="?order=day">Date</a></li>
+      <li><a href="?order=-day">Date</a></li>
+
+    </ul>
+
+  </li>
+
+</ul>
+</section>
+
+
+{% if tag %}
+<h2 style="text-align: center">Event tagged with "{{ tag.name }}"</h2>
+    <h1 style="font-family: Merriweather, serif; font-weight: bold; font-size: 20px; color: black">{{ total_events }} event{{ total_events|pluralize }} found </h1>
+{% endif %}
+<div class="grid-x grid-margin-x">
+       {% for event in events%}
+        <div class="cell large-2 small-12 medium-4">
+        <div class="news-card-tag">
+
+
+</div>
+ <div class="card-image">
+
+      {% if event.photo %}
+          <a href="{{ event.get_absolute_url }}"><img src="{{ event.photo.url }}"></a>
+      {% endif %}
+
+  </div>
+<div class="card-flex-article card">
+
+  <div class="card-section">
+
+      <h5 class="article-title" style="color: darkred; font-size: 20px"> <strong>{{event.title}}</strong></h5>
+    <div class="article-details">
+
+    </div>
+
+
+  </div>
+<p class="article-summary" style="font-family: Merriweather; color: darkblue"><strong> <i class="fa fa-location-arrow " style="color:darkred" aria-hidden="true"></i> {{ event.location|capfirst }}</strong></p>
+    <h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 16px; color: black; font-weight: bold"><i class="fa fa-calendar-check-o " style="color:darkred" aria-hidden="true"></i> {{ event.day }} </h5>
+            <p style=" margin-left:25px; font-family:'Oswald', bold; font-size: 15px; color: black; font-weight: bold"><i class="fa fa-clock-o " style="color:darkred" aria-hidden="true"></i> {{ event.start }} - {{ event.end }} </p>
+</div>
+
+
+    </div>
+{% endfor %}
+</div>
+</div>
+{% else %}
+<p>No Entry Yet</p>
+{% endif %}
+
+    {% if events.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if events.has_previous %}
+     <li class="pagination-previous"><a class="pagination-pointed-button" href="?{% query_transform request page=events.previous_page_number %}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  events.paginator.page_range %}
+    {% if events.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?{% query_transform request page=i %}">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if events.has_next %}
+   <li class="pagination-next"><a class="pagination-pointed-button" href="?{% query_transform request page=events.next_page_number %}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% if tag.name in tag %}
+        {% if events.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if events.has_previous %}
+     <li class="pagination-previous"><a class="pagination-pointed-button" href="?{% query_transform request page=events.previous_page_number %}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  events.paginator.page_range %}
+    {% if events.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?{% query_transform request page=i %}">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if events.has_next %}
+<li class="pagination-next"><a class="pagination-pointed-button" href="?{% query_transform request page=events.next_page_number %}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% endif %}
+
+
+
+
+
+{% endblock %}
+
+{% endblock %}

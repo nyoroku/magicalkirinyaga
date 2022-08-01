@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+ BLOG
+ {% endblock %}
+{% block body_block %}
+
+{% block content %}
+<h4 class="center blue-text ">BLOGS</h4>
+    <hr>
+
+{% if blogs %}
+
+
+{% for blog  in blogs %}
+<ul>
+    <li class="">
+        <div class="container-fluid">
+
+<div class="card white">
+
+
+    <h5 class="blue-text darken-4 center" style=""><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h5>
+
+        <p class="center blue-text darken-4">Posted on {{ blog.created }}  BY:  {{ blog.author }}</p>
+
+ {{ blog.body|truncatewords:30|linebreaks }}
+</div>
+
+
+
+
+</div>
+
+</li>
+    </ul>
+{% endfor %}
+
+
+{% else %}
+<p> There is no blog posts yet</p>
+{% endif %}
+
+{% endblock %}
+    {% include "college/pagination.html" with page=blogs %}
+
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title %}{{ place.name }}{% endblock %}
+{% block content %}
+
+
+
+<div class="grid-container fluid">
+<div class="wording">
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 25px; color: black; font-weight: bold">{{ place.name }}</h5>
+</div>
+<div class="grid-x grid-margin-x">
+
+
+<div class="cell large-9 small-12 medium-12">
+<div>
+<ul class="pgwSlider">
+     {% for photo in images %}
+     {% if photo.image %}
+    <li><img class="img-responsive" src="{{ photo.image.url }}"></li>
+    {% endif %}
+ {% endfor %}
+
+</ul>
+<div>
+
+
+<bdi class="descip" style="padding:20px; position: inherit; float: none;">
+
+
+</bdi>
+<div class="md-tabs">
+  <div class="mobile-nav-bar title-bar">
+
+    <div class="title-bar-center">
+      <span class="title-bar-text">{{ place.name }} Information</span>
+    </div>
+
+  </div>
+
+  <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
+    <li class="tabs-title is-active"><a href="#panel1c" aria-selected="true">Description</a></li>
+    <li class="tabs-title"><a href="#panel2c">Vitals</a></li>
+    <li class="tabs-title"><a href="#panel3c">Interesting Things Around</a></li>
+
+
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="collapsing-tabs">
+    <div class="tabs-panel is-active" id="panel1c">
+      <p class="p">
+          {{ place.detail }}
+      </p>
+    </div>
+  <div class="tabs-panel" id="panel2c">
+ <section class="app-feature-section">
+  <div class="row align-middle">
+
+
+
+    <div class="  medium-9 columns">
+
+      <div class="grid-x grid-margin-x  app-feature-section-features">
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-address-book" aria-hidden="true"></i> <span>{{ place.location }}</span>
+        </div>
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-phone" aria-hidden="true"></i> <span>{{ place.phone }}</span>
+        </div>
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-link" aria-hidden="true"></i> <span>{{ place.website }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+    </div>
+    <div class="tabs-panel" id="panel3c">
+ {% for interest in interests %}
+          <ul style="list-style-type: none">
+              <li style="float: left;  width: 50%"><i class="fa fa-star " style="color:#002C3E" aria-hidden="true"></i> {{ interest.name }}</li>
+          </ul>
+        {% endfor %}
+    </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="content">
+<div class="wording">
+<h5 style=" margin-left:20px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Facilities</h5>
+</div>
+
+<div class="multiple-items">
+    {% for facility in facilities %}
+
+ <div class="card-flex-article card flex-container">
+
+  <div class="card-image">
+  {% if facility.photo %}
+    <img src="{{facility.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{facility.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+
+  </div>
+
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+
+    </div>
+
+    <div class="content">
+<div class="wording">
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Activities in {{ place.name }}</h5>
+</div>
+
+<div class="multiple-items">
+    {% for activity in activities %}
+
+ <div class="card-flex-article card flex-container">
+
+  <div class="card-image">
+  {% if activity.photo %}
+    <img src="{{activity.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{activity.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+
+  </div>
+
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+
+    </div>
+<div class="cell large-6 medium-12">
+
+    <br>
+
+</div><br>
+{% if similar_place %}
+    <div class="content">
+<div class="wording">
+
+<h5 style=" margin-left:25px; font-family:'Merriweather', bold; font-size: 16px; color: darkblue; font-weight: bold">More Places To See</h5>
+</div>
+
+<div class="multiple-items">
+    {% for place in similar_place %}
+<div class="card-flex-article card flex-container">
+ <a href="{{ place.get_absolute_url }}">
+  <div class="card-image">
+    <img src="{{place.photo.url}}">
+
+  </div>
+  <div class="card-section">
+      <h3 class="article-title" style="color: black">{{place.name}}</h3>
+
+
+  </div>
+ </a>
+  </div>
+    {% endfor %}
+
+    </div>
+    </div>
+{% endif %}
+
+
+
+
+{% endblock %}
+
+

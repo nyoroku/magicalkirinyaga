@@ -1,0 +1,473 @@
+{%load i18n staticfiles %}
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Kirinyaga</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.0/css/foundation-flex.css">
+      <link href="{% static "css/foundation.css" %}" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link href="{% static "css/app.css" %}" rel="stylesheet">
+    <link href="{% static "fonts/slick.svg" %}" rel="stylesheet">
+	<link href="{% static "fonts/slick.eot" %}" rel="stylesheet">
+	<link href="{% static "fonts/slick.ttf" %}" rel="stylesheet">
+	<link href="{% static "fonts/slick.woff" %}" rel="stylesheet">
+	<link href="{% static "css/slick-theme.css" %}" rel="stylesheet">
+	<link href="{% static "css/" %}" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Chela+One|Coda+Caption:800|Fira+Sans|Gaegu|Hind|Knewave|Lato|Libre+Baskerville|Lora|Markazi+Text|Merienda|Merriweather|Montserrat|Noto+Sans|Noto+Serif|Open+Sans|Open+Sans+Condensed:300|Oswald|PT+Sans|PT+Sans+Narrow|Playfair+Display|Poppins|Raleway|Roboto|Roboto+Condensed|Roboto+Slab|Rubik|Slabo+27px|Source+Sans+Pro|Ubuntu" rel="stylesheet">
+  </head>
+  <body>
+  <div data-sticky-container>
+  <nav class="fixed top-bar topbar-responsive">
+  <div class="top-bar-title">
+    <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
+      <button class="menu-icon" type="button" data-toggle></button>
+    </span>
+    <a class="topbar-responsive-logo" style="font-family:'Ubuntu', Bold; font-size: 30px; color: red" href="{% url 'travel' %}"><strong>Magical Kirinyaga</strong></a>
+  </div>
+  <div id="topbar-responsive" class="topbar-responsive-links">
+    <div class="top-bar-right">
+      <ul class="menu simple vertical medium-horizontal">
+          {% if request.user.is_authenticated  %}
+         <li style="font-family:'Oswald', bold; font-size: 20px; color: white"> Welcome {{ user.username|capfirst }}</li>
+      {% endif %}
+
+          <li style="font-family:'Oswald', bold; font-size: 20px; color: white"><a href="#">About US</a></li>
+
+      {% if  not request.user.is_authenticated %}
+ <li style="font-family:'Oswald', bold; font-size: 20px; color: white">
+          <a href="{% url 'kirinyaga:user_registration' %}"><button type="button" class="button hollow topbar-responsive-button">
+              Register  </button></a>
+</li>
+      {% endif %}
+              {% if request.user.is_authenticated %}
+ <li style="font-family:'Oswald', bold; font-size: 20px; color: white">
+          <a href="{% url 'logout' %}"><button type="button" class="button hollow topbar-responsive-button">
+              Logout </button></a>
+</li>
+
+{% else %}
+     <li style="font-family:'Oswald', bold; font-size: 20px; color: white">
+         <a href="{% url 'login' %}"> <button type="button" class="button hollow topbar-responsive-button">
+             Login</button></a>
+</li>
+          {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="hero-section">
+  <div class="hero-section-text">
+    <h1 style="font-family:'Ubuntu', Bold; font-size: 30px; color: blue">Explore Kirinyaga</h1>
+    <h5 style="font-family:'Ubuntu', Bold; font-size: 20px; color: red">Because Kirinyaga Is Beautiful</h5>
+
+
+
+
+
+  </div>
+</div>
+
+
+
+  <section style="background-color: whitesmoke">
+
+<div class="content">
+<div class="wording">
+    {% load attraction_tag %}
+    {% get_attractions %}
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Top Attractions</h5>
+</div>
+
+<div class="deals">
+    {% for attraction in attractions %}
+ <div class="card-flex-article card flex-container">
+ <a href="{{ attraction.get_absolute_url }}">
+  <div class="card-image">
+  {% if attraction.photo %}
+    <img src="{{attraction.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{attraction.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+      <p class="article-summary" style="font-family: Merriweather; color: darkblue">{{ attraction.detail|truncatewords:30 }}</p>
+  </div>
+ </a>
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+
+    </div>
+ </section>
+   <section style="background-color: #f8e9a1">
+<div class="content">
+<div class="wording">
+    {% load places_tags %}
+    {% get_places %}
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Places To Go</h5>
+</div>
+
+<div class="deals">
+    {% for place in places %}
+ <div class="card-flex-article card flex-container">
+ <a href="{{ place.get_absolute_url }}">
+  <div class="card-image">
+  {% if place.photo %}
+    <img src="{{place.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{place.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+      <p class="article-summary" style="font-family: Merriweather; color: darkblue">{{ place.detail }}</p>
+  </div>
+ </a>
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+<div class="show-for-medium">
+    <h1 style=" margin-left:30px; font-family:'Oswald', bold; font-size: 20px; color: darkred; opacity: 2.5"><a href="{% url 'kirinyaga:allplaces' %}" style="color:darkred;">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i></a> </h1>
+</div>
+<div class="show-for-small-only" style="text-align:center">
+<a href="{% url 'kirinyaga:allplaces' %}" class= "" style="font-family:'Oswald', bold; font-size: 16px; color: darkred">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i> </a>
+</div>
+    </div>
+
+   </section>
+ <section style="background-color: whitesmoke">
+<div class="content">
+<div class="wording">
+    {% load stay_tags %}
+    {% get_stays %}
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Where To Stay</h5>
+</div>
+
+<div class="deals">
+    {% for stay in stays %}
+ <div class="card-flex-article card flex-container">
+ <a href="{{ stay.get_absolute_url }}">
+  <div class="card-image">
+  {% if stay.photo %}
+    <img src="{{stay.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{stay.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+<p class="article-summary" style="font-family: Merriweather; color: darkblue">{{ stay.description|truncatewords:30 }}</p>
+  </div>
+ </a>
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+<div class="show-for-medium">
+    <h1 style=" margin-left:30px; font-family:'Oswald', bold; font-size: 20px; color: darkred; opacity: 2.5"><a href="{% url 'kirinyaga:allstays' %}" style="color:darkred;">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i></a> </h1>
+</div>
+<div class="show-for-small-only" style="text-align:center">
+<a href="{% url 'kirinyaga:allstays' %}" class= "" style="font-family:'Oswald', bold; font-size: 16px; color: darkred">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i> </a>
+</div>
+    </div>
+ </section>
+
+ <section style="background-color: #f8e9a1">
+
+<div class="content">
+<div class="wording">
+    {% load eat_tags %}
+    {% get_eats %}
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Eat And Drink</h5>
+</div>
+
+<div class="deals">
+    {% for eat in eats %}
+ <div class="card-flex-article card flex-container">
+ <a href="{{ eat.get_absolute_url }}">
+  <div class="card-image">
+  {% if eat.photo %}
+    <img src="{{eat.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: black; font-size: 16px"> {{eat.name}}</h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+      <p class="article-summary" style="font-family: Merriweather; color: darkblue">{{ eat.description|truncatewords:30 }}</p>
+  </div>
+ </a>
+
+  </div>
+
+    {% endfor %}
+
+ </div>
+<div class="show-for-medium">
+    <h1 style=" margin-left:30px; font-family:'Oswald', bold; font-size: 20px; color: darkred; opacity: 2.5"><a href="{% url 'kirinyaga:alleats' %}" style="color:darkred;">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i></a> </h1>
+</div>
+<div class="show-for-small-only" style="text-align:center">
+<a href="{% url 'kirinyaga:alleats' %}" class= "" style="font-family:'Oswald', bold; font-size: 16px; color: darkred">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i> </a>
+</div>
+    </div>
+ </section>
+
+
+
+
+
+ <section style="background-color: whitesmoke">
+<div class="content">
+<div class="wording">
+    {% load events_tags %}
+    {% get_latest_events %}
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Events Happening</h5>
+</div>
+
+<div class="deals">
+    {% for event in events %}
+ <div class="card-flex-article card flex-container">
+ <a href="{{ event.get_absolute_url }}">
+  <div class="card-image">
+  {% if event.photo %}
+    <img src="{{event.photo.url}}">
+  {% endif %}
+
+
+  </div>
+  <div class="card-section">
+      <h5 class="article-title" style="color: darkred; font-size: 20px"> <strong>{{event.title}}</strong></h5>
+
+    <div class="article-details">
+
+
+
+    </div>
+      <p class="article-summary" style="font-family: Merriweather; color: darkblue"><strong> <i class="fa fa-location-arrow " style="color:darkred" aria-hidden="true"></i> {{ event.location|capfirst }}</strong></p>
+  </div>
+ </a>
+ <h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 16px; color: black; font-weight: bold"><i class="fa fa-calendar-check-o " style="color:darkred" aria-hidden="true"></i> {{ event.day }} </h5>
+  <p style=" margin-left:25px; font-family:'Oswald', bold; font-size: 15px; color: black; font-weight: bold"><i class="fa fa-clock-o " style="color:darkred" aria-hidden="true"></i> {{ event.start }} - {{ event.end }} </p>
+  </div>
+
+    {% endfor %}
+
+ </div>
+<div class="show-for-medium">
+    <h1 style=" margin-left:30px; font-family:'Oswald', bold; font-size: 20px; color: darkred; opacity: 2.5"><a href="{% url 'events:allevents' %}" style="color:darkred;">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i></a> </h1>
+</div>
+<div class="show-for-small-only" style="text-align:center">
+<a href="{% url 'events:allevents' %}" class= "" style="font-family:'Oswald', bold; font-size: 16px; color: darkred">View More<i class="fa fa-arrow-right " style="color:darkred" aria-hidden="true"></i> </a>
+</div>
+    </div>
+
+   </section>
+  <!-- slider code -->
+<section style="background-color: #f8e9a1;">
+<div class="content">
+<div class="wording">
+    {% load testi_tags %}
+    {% get_latest_testimonials %}
+<div class="orbit testimonial-slider-container" role="region" aria-label="testimonial-slider" data-orbit>
+      <h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 20px; color: black; font-weight: bold">Kirinyaga From The Eyes Of Its People</h5>
+  <ul class="orbit-container">
+    <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+    <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+
+    <!-- content slide 1 -->
+
+
+
+
+
+
+
+    <!-- content slide 4 -->
+{% for testimonial in testimonials %}
+    <li class="orbit-slide">
+      <div class="testimonial-slide row">
+        <div class="small-12 large-9 column">
+          <div class="row align-middle testimonial-slide-content">
+            <div class="small-12 medium-4 column hide-for-small-only profile-pic">
+                {% if testimonial.photo %}
+              <img src="{{ testimonial.photo.url }}">
+                {% endif %}
+            </div>
+            <div class="small-12 medium-8 column testimonial-slide-text">
+              <p class="testimonial-slide-quotation">{{ testimonial.text }}.</p>
+              <div class="testimonial-slide-author-container">
+                <div class="small-profile-pic show-for-small-only">
+                    {% if testimonial.photo %}
+                  <img src="{{ testimonial.photo.url }}">
+                    {% endif %}
+                </div>
+                <p class="testimonial-slide-author-info">{{ testimonial.person }}<br><i class="subheader">{{ testimonial.occupation }}</i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+      {% endfor %}
+  </ul>
+</div>
+</div>
+</div>
+
+<!-- slider close -->
+</section>
+
+
+ <div id="engadget-footer-social-container">
+    <footer id="engadget-footer-social">
+        <div class="footer-left">
+		<h6 style="font-family:'Lato', serif; font-size: 20px; color: white"> Contact Us</h6>
+         <a href="{% url 'kirinyaga:dashboard' %}"><h6>Partner's Dashboard </h6></a>
+         <h6 style="font-family:'Lato', serif; font-size: 20px; color: white">@ Magical Kirinyaga 2021</h6>
+
+        </div>
+        <div class="footer-right">
+            <h6 style="font-family:'Lato', serif; font-size: 20px; color: white">Stay Connected</h6>
+            <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+            <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+            <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i>
+            <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
+        </div>
+    </footer>
+</div>
+
+    
+
+  
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'js/vendor/what-input.js' %}"></script>
+    <script src="{% static 'js/vendor/foundation.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'js/' %}"></script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.multiple-items').slick({
+  infinite: true,
+  arrows:true,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  dots:false,
+       responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1.2,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+  
+});
+    });
+  </script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.deals').slick({
+  infinite: true,
+  arrows:true,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  dots:true,
+       responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1.1,
+        slidesToScroll: 1,
+        arrows: false,
+        infinite :  false
+
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+  
+});
+    });
+  </script>
+  </body>
+</html>

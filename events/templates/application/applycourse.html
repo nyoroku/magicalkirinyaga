@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    APPLY ONLINE
+    {% endblock %}
+{% block body_block %}
+    <h5 class="blue-grey-text">Application Form</h5>
+<form class="white darken-3" action="{% url 'events:apply'%}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+
+
+
+    <div style="margin-top:10%; margin-bottom:10%;" class="col s12 center-align">
+					        <button style="border-radius:3px;" class="orange darken-4 btn waves-effect waves-light" type="submit" name="action">Apply</button>
+    </div>
+</form>
+{% endblock %}

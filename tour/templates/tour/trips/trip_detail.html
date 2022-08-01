@@ -1,0 +1,89 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="grid-container">
+<div class="grid-x grid-margin-x">
+<div class="cell large-8 small-12 medium-12">
+<div class="fullscreen-image-slider">
+  <div class="orbit" role="region" aria-label="FullScreen Pictures" data-orbit>
+    <ul class="orbit-container">
+
+      <button class="orbit-previous">
+
+        <span class="show-for-sr">Previous Slide</span>
+        <span class="nav fa fa-chevron-left fa-3x"></span>
+      </button>
+
+      <button class="orbit-next">
+        <span class="show-for-sr">Next Slide</span>
+        <span class="nav fa fa-chevron-right fa-3x"></span>
+      </button>
+        {% if image %}
+            {% for img in image %}
+      <li class="is-active orbit-slide">
+        <img class="orbit-image" src="{{ img.image.url }}" alt="photo">
+        <figcaption class="orbit-caption">
+          <h1></h1>
+        </figcaption>
+      </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+  </div>
+  </div>
+    <div class="descip" style="padding:20px;">
+<h1 style=" font-family:'Ubuntu', serif; font-size: 40px; color: red">{{ trip.title }} Kshs {{ trip.price }}</h1>
+<a href="#features" class= "hollow button large">Add to Favourites<i class="fa fa-star " style="color:red" aria-hidden="true"></i></a>
+<a href="#features" class= "button large">Book Now</a>
+<h1 style="font-family:'Chela', serif; font-size: 30px; color: darkblue">Description</h1>
+<p  style="font-family:'Roboto', serif; font-size: 20px; color: black">
+{{ trip.detail }}
+</p>
+    </div>
+
+</div>
+<div class="cell large-4">
+<div class="trips" style="padding:20px;">
+
+<h1 style="padding:20px; font-family:'Ubuntu', serif; font-size: 30px; color: darkblue">Included</h1>
+
+<pre style=" font-family:'Lato', serif; font-size: 25px; color: black;white-space: pre-wrap;word-wrap: break-word; text-align: justify">
+{{ trip.included }}
+</pre>
+
+<h1 style="padding:20px; font-family:'Ubuntu', serif; font-size: 30px; color: darkblue">Excluded</h1>
+<pre style=" font-family:'Lato', serif; font-size: 25px; color: black;white-space: pre-wrap;word-wrap: break-word; text-align: justify">
+{{ trip.excluded }}
+</pre>
+</div>
+</div>
+</div>
+</div>
+    <div class="content">
+<div class="wording">
+
+
+<h2 style=" margin-left:10px; font-family:'Roboto', bold; font-size: 30px; color: black">Recommended Trips for You</h2>
+</div>
+
+<div class="responsive">
+    {% for trip in similar_trips %}
+<div class="card">
+<a href="{{ trip.get_absolute_url }}">
+         <img src="{{ trip.photo.url }}" /></a>
+  <div class="card-section">
+  <h5 style="font-family:'Playfair Display', serif; font-size: 20px; color: black">{{ trip.title }}</h5>
+    <p style="font-family:'Playfair Display', serif; font-size: 20px; color: red">{{ trip.price }}</p>
+  </div>
+</div>
+    {% endfor %}
+
+
+
+
+
+ </div>
+    </div>
+
+
+{% endblock %}

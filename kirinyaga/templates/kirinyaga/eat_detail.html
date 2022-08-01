@@ -1,0 +1,176 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title %}{{ eat.name }}{% endblock %}
+{% block content %}
+
+
+    <div class="grid-container fluid" xmlns="http://www.w3.org/1999/html">
+<div class="wording">
+<h5 style=" margin-left:30px; font-family:'Oswald', bold; font-size: 25px; color: black; font-weight: bold">{{ eat.name }}</h5>
+</div>
+<div class="grid-x grid-margin-x">
+
+
+<div class="cell large-9 small-12 medium-12">
+<div>
+<ul class="pgwSlider">
+     {% for photo in images %}
+     {% if photo.image %}
+    <li><img class="img-responsive" src="{{ photo.image.url }}"></li>
+    {% endif %}
+ {% endfor %}
+
+</ul>
+<div>
+
+
+<bdi class="descip" style="padding:20px; position: inherit; float: none;">
+
+
+</bdi>
+<div class="md-tabs">
+  <div class="mobile-nav-bar title-bar">
+
+    <div class="title-bar-center">
+      <span class="title-bar-text">{{ eat.name }} Information</span>
+    </div>
+
+  </div>
+
+  <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
+    <li class="tabs-title is-active"><a href="#panel1c" aria-selected="true">Description</a></li>
+    <li class="tabs-title"><a href="#panel2c">Vitals</a></li>
+
+
+
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="collapsing-tabs">
+    <div class="tabs-panel is-active" id="panel1c">
+      <p class="p">
+          {{ eat.description }}
+      </p>
+    </div>
+  <div class="tabs-panel" id="panel2c">
+ <section class="app-feature-section">
+  <div class="row align-middle">
+
+
+
+    <div class="  medium-9 columns">
+
+      <div class="grid-x grid-margin-x  app-feature-section-features">
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-address-book" aria-hidden="true"></i> <span>{{ eat.location }}</span>
+        </div>
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-phone" aria-hidden="true"></i> <span>{{ eat.phone }}</span>
+        </div>
+        <div class="cell small-6 app-feature-section-features-block">
+          <i class="fa fa-link" aria-hidden="true"></i> <span>{{ eat.website }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+    </div>
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 25px; color: black; font-weight: bold">Menu</h5>
+<table>
+<thead>
+<tr style="font-family: Oswald, bold; color: darkblue">
+    <th width="100">Option</th>
+    <th width="50">Price</th>
+
+
+</tr>
+
+</thead>
+<tbody>
+{% for menu in menus %}
+<tr>
+    <td width="100"><h5><strong>{{ menu.name }}</strong></h5>
+         <p>{{ menu.description }}</p>
+    </td>
+<td>
+    <h5>{{ menu.price }}</h5>
+
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<h5 style=" margin-left:25px; font-family:'Oswald', bold; font-size: 25px; color: black; font-weight: bold">Opening Hours</h5>
+    <table>
+<thead>
+<tr style="font-family: Oswald, bold; color: darkblue">
+    <th width="100">Day</th>
+    <th width="50">Time</th>
+
+
+</tr>
+
+</thead>
+<tbody>
+{% for hour in hours %}
+<tr>
+    <td width="100">{{ hour.day|capfirst }}</td>
+<td>
+    <h5>{{ hour.opening_time }}- {{ hour.closing_time }}</h5>
+
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<div class="cell large-6 medium-12">
+
+    <br>
+
+</div><br>
+{% if similar_place %}
+    <div class="content">
+<div class="wording">
+
+<h5 style=" margin-left:25px; font-family:'Merriweather', bold; font-size: 16px; color: darkblue; font-weight: bold">More Places</h5>
+</div>
+
+<div class="multiple-items">
+    {% for stay in similar_stay %}
+<div class="card-flex-article card flex-container">
+ <a href="#">
+  <div class="card-image">
+    <img src="{{stay.photo.url}}">
+
+  </div>
+  <div class="card-section">
+      <h3 class="article-title" style="color: black">{{stay.name}}</h3>
+
+
+  </div>
+ </a>
+  </div>
+    {% endfor %}
+
+    </div>
+    </div>
+{% endif %}
+
+
+
+
+{% endblock %}
+
+

@@ -1,0 +1,71 @@
+{% extends "tour/main.html" %}
+{% block title %}
+
+Edit {{ object.name }}
+
+{% endblock %}
+{% block content %}
+<h1 style="text-align: center">
+
+Edit  "{{ object.name|capfirst }}"
+
+</h1>
+<div class="module">
+
+<form action="." method="post" id="" data-models-url="#" novalidate enctype="multipart/form-data">
+    <div class="grid-container">
+        <h2>Accommodation info</h2>
+      <table style="background-color: grey">
+          {{ form.media }}
+          {{ form.media.js }}
+{{ form.as_table }}
+      </table>
+        <h2> Edit Images</h2>
+
+
+    <table>
+{{ stayimages_formset }}
+{{ stayimages_formset.management_form }}
+    </table>
+          <h2>Edit Facilities</h2>
+
+
+    <table>
+{{ stayfacilities_formset }}
+{{ stayfacilities_formset.management_form }}
+    </table>
+            <h2>Edit Room Type</h2>
+
+
+    <table>
+{{ rooms_formset }}
+{{ rooms_formset.management_form }}
+    </table>
+            <h2>Edit Interesting Places Around </h2>
+
+
+    <table>
+{{ stayinterests_formset }}
+{{ stayinterests_formset.management_form }}
+    </table>
+              <h2>Edit Terms and Conditions </h2>
+
+
+    <table>
+{{ terms_formset }}
+{{ terms_formset.management_form }}
+    </table>
+          <button type="submit" class="primary button expanded search-button">
+      Save Accommodation
+    </button>
+
+
+    </div>
+{% csrf_token %}
+
+</form>
+
+</div>
+
+
+{% endblock %}

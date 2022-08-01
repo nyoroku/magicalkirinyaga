@@ -1,0 +1,99 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title %}My Eat/Drink Place List{% endblock %}
+{% block body_block %}
+
+{% block content %}
+<h5 class="center" style=" margin-top: 1.5%; margin-bottom: 0.001%; font-family: 'Oswald',Bold; font-size: 40px; text-align: center; color: darkred">My Eat/Drink Places List</h5>
+{% if object_list %}
+   <h5>{{ object_list.count }} Place{{ eats|pluralize }}</h5>
+<table>
+<thead>
+<tr style="font-family: Oswald, bold; color: darkblue">
+    <th width="100">Name</th>
+    <th width="50">Sub County</th>
+    <th width="50">Tag Line</th>
+    <th width="50">Make Changes</th>
+
+
+</tr>
+
+</thead>
+<tbody>
+{% for place in object_list %}
+<tr>
+    <td width="100"><a href="{% url 'kirinyaga:eat_edit' place.id%}">{{ place.name }}</a></td>
+<td>{{ place.sub_county }}</td>
+<td>{{ place.tag_line }}</td>
+<td width="20"> <h5 style="font-family: Merriweather, serif; font-weight: bold; font-size: 15px; color: red; text-align: center">
+<a href="{% url 'kirinyaga:eat_edit' place.id %}">Edit <i class="fa fa-edit " style="color:#002C3E" aria-hidden="true"></i></a>&#8226;
+    <a href="{% url 'kirinyaga:eat_delete' place.id %}">Delete<i class="fa fa-remove " style="color:#002C3E" aria-hidden="true"></i></a>
+</h5></td>
+
+
+
+
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% else %}
+ <div class="grid-container">
+    <h5 style="text-align: center">
+    Add Your First Listing
+    </h5>
+    </div>
+{% endif %}
+
+
+
+     {% if page_obj.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if page_obj.has_previous %}
+        <li class="pagination-previous"><a class="pagination-pointed-button" href="?page={{ page_obj.previous_page_number }}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?page={{ i }}" aria-label="Page 2">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+  <li class="pagination-next"><a class="pagination-pointed-button" href="?page={{ page_obj.next_page_number }}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    <div class="grid-container">
+    <a href="{% url 'kirinyaga:eat_add' %}" class="button expanded" style="text-align: center">
+    Add A New Place
+    </a>
+    </div>
+    {% if tag.name in tag %}
+        {% if object_list.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if object_list.has_previous %}
+        <li class="pagination-previous"><a class="pagination-pointed-button" href="?page={{ object_list.previous_page_number }}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  object_list.paginator.page_range %}
+    {% if object_list.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?page={{ i }}" aria-label="Page 2">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if object_list.has_next %}
+  <li class="pagination-next"><a class="pagination-pointed-button" href="?page={{ object_list.next_page_number }}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% endblock %}

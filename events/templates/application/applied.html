@@ -1,0 +1,10 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+ Thank you for applying
+ {% endblock %}
+{% block body_block %}
+    <h5 class="center">Thank you {{ application.firstname }} {{ application.lastname }}</h5>
+<p class="center">Your application has been successfully completed
+</p>
+{% endblock %}

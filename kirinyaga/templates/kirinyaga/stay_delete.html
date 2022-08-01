@@ -1,0 +1,14 @@
+{% extends "tour/main.html" %}
+{% block title %}Delete {{ object.name }} {% endblock %}
+{% block content %}
+    <div class="grid-container">
+<h1>Delete  "{{ object.name|capfirst }}"</h1>
+<div class="module">
+<form action="" method="post">
+{% csrf_token %}
+<p>Are you sure you want to delete "{{ object.name|capfirst }}"?</p>
+<input type="submit" class="button" value="Confirm">
+</form>
+</div>
+    </div>
+{% endblock %}

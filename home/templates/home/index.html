@@ -1,0 +1,44 @@
+{% extends 'home/main.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    We Raise Manpower
+    {% endblock %}
+{% block news %}
+
+{% block content %}
+
+{% if news %}
+<div class="row">
+{% for new in news %}
+
+
+    <div class="col s12 m3">
+      <div class="card grey lighten-2">
+        <div class="card-image">
+           {% if new.photo %}
+        <img class="img-responsive" src="{{ new.photo.url }}" alt="My image"/>
+     {% endif %}
+
+        </div>
+        <div class="card-content">
+            <span class="card-title red-text" style="font-family: 'Coda Caption', Extra-bold;font-size: 20px">{{ new.title }}</span>
+            <span class="card-title red-text" style="font-family: 'Coda Caption', Extra-bold;font-size: 20px">{{ new.created }}</span>
+          <p style="font-family:'Libre Baskerville', Regular;"> {{ new.body|truncatewords:20 }}</p>
+        </div>
+        <div class="card-action red-text">
+          <a href="{{ new.get_absolute_url }}" class="red-text darken-5" style="font-family:'Coda Caption', bold; ">Read On<i class="fa fa-arrow-circle-right" style="font-size:17px"></i></a>
+        </div>
+      </div>
+    </div>
+
+
+
+{% endfor %}
+    </div>
+
+{% else %}
+<p>No news yet</p>
+{% endif %}
+{% endblock %}
+
+{% endblock %}

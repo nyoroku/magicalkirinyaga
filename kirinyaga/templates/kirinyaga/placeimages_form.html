@@ -1,0 +1,22 @@
+{% extends "tour/main.html" %}
+{% block title %}
+Edit "{{ place.name }}"
+{% endblock %}
+{% block content %}
+<h1>Edit "{{ place.name }}"</h1>
+<div class="grid-container">
+<h2>Place Images</h2>
+
+<form action="." method="post" enctype="multipart/form-data">
+    <table>
+{{ formset }}
+{{ formset.management_form }}
+    </table>
+{% csrf_token %}
+<input type="submit" class="button" value="Save Images">
+</form>
+
+
+
+</div>
+{% endblock %}

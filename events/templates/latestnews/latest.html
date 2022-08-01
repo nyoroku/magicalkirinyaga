@@ -1,0 +1,43 @@
+{% extends 'home/index.html' %}
+{% load staticfiles %}
+{% block news %}
+
+{% if news %}
+    {%for n in news %}
+
+<ul>
+<li>
+   <div class="container">
+
+
+      <!--   Icon Section   -->
+        <div class="container-fluid">
+      <div class="card">
+
+
+
+
+
+          <div class="col s12 s4">
+          <div class="card grey">
+              <div class="card-image">
+               <img class="img-responsive"  src="{% static "home/images/guide.gif" %}">
+              </div>
+            <h5 class="center light-blue-text"><i class="material-icons">{{ n.title }}</i></h5>
+
+
+            <p class="center">{{ n.body }}</p>
+          </div>
+        </div>
+      </div>
+        </div>
+    </div>
+
+</li>
+</ul>
+    {% endfor %}
+{% else %}
+<p>No news yet</p>
+{% endif %}
+    {% include "college/pagination.html" with page=news %}
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Trips
+    {% endblock %}
+{% block body_block %}
+
+{% block content %}
+<h5 class="center" style=" margin-top: 1.5%; margin-bottom: 0.001%; font-family: 'Oswald',Bold; font-size: 40px">ALL TRIPS</h5>
+{% if trips %}
+
+{% if tag %}
+<h2>Trip tagged with "{{ tag.name }}"</h2>
+{% endif %}
+
+ <div class="contain">
+<div class="grid-x grid-margin-x">
+       {% for trip in trips %}
+        <div class="cell large-3">
+        <div class="news-card-tag">
+
+  <p class="tags">
+      Tags:
+      {% for tag in trip.tags.all %}
+          <span class="label"><a href="{% url "tour:alltrips_by_tag" tag.slug %}">{{ tag.name }}</a>
+          </span>
+
+{% if not forloop.last %}, {% endif %}
+{% endfor %}
+</p>
+</div>
+
+<div class="card news-card">
+{% if trip.photo %}
+    <img src="{{ trip.photo.url }}">
+    {% endif %}
+  <div class="card-section">
+    <div class="news-card-date">{{ trip.date_added }}</div>
+    <article class="news-card-article">
+      <h4 class="news-card-title"><a href="{{ trip.get_absolute_url }}">{{ trip.title }}</a></h4>
+      <p class="news-card-description">{{ trip.detail|truncatewords:10 }}</p>
+    </article>
+
+</div>
+</div>
+    </div>
+{% endfor %}
+</div>
+</div>
+{% else %}
+<p>No trips yet</p>
+{% endif %}
+{% endblock %}
+
+{% endblock %}

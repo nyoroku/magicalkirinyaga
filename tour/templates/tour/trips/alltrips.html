@@ -1,0 +1,115 @@
+{% extends 'tour/main.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Trips
+    {% endblock %}
+{% block body_block %}
+
+{% block content %}
+<h5 class="center" style=" margin-top: 1.5%; margin-bottom: 0.001%; font-family: 'Oswald',Bold; font-size: 40px">ALL TRIPS</h5>
+{% if trips %}
+
+{% if tag %}
+<h2>Trip tagged with "{{ tag.name }}"</h2>
+{% endif %}
+
+ <div class="contain">
+<div class="grid-x grid-margin-x">
+       {% for trip in trips %}
+        <div class="cell large-3">
+        <div class="news-card-tag">
+
+  <p class="tags">
+      Tags:
+      {% for tag in trip.tags.all %}
+          <span class="label"><a href="{% url "tour:alltrips_by_tag" tag.slug %}">{{ tag.name }}</a>
+          </span>
+
+{% if not forloop.last %}, {% endif %}
+{% endfor %}
+</p>
+</div>
+
+<div class="card news-card">
+{% if trip.photo %}
+    <img src="{{ trip.photo.url }}">
+    {% endif %}
+  <div class="card-section">
+
+    <article class="news-card-article">
+      <h4 class="news-card-titl" style="font-family: Roboto; font-size: 35px; color: darkblue"><a href="{{ trip.get_absolute_url }}">{{ trip.title }}</a></h4>
+        <p class="news-card-description" style="font-family: Lato; font-size: 25px; color: dimgrey">Ksh {{ trip.detail|truncatechars:10}}</p>
+      <p class="news-card-descriptio" style="font-family: Ubuntu; font-size: 25px; color: dimgrey">Ksh {{ trip.price}}</p>
+        <p class="news-card-descriptio" style="font-family: Roboto; font-size: 20px; color: dimgrey">Add To Favourites <i class="fa fa-heart  " style="color:red" aria-hidden="true"></i></p>
+    </article>
+
+</div>
+
+
+</div>
+    </div>
+{% endfor %}
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% else %}
+<p>No trips yet</p>
+{% endif %}
+
+    {% if trips.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if trips.has_previous %}
+        <li class="pagination-previous"><a class="pagination-pointed-button" href="?page={{ trips.previous_page_number }}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  trips.paginator.page_range %}
+    {% if trips.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?page={{ i }}" aria-label="Page 2">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if trips.has_next %}
+  <li class="pagination-next"><a class="pagination-pointed-button" href="?page={{ trips.next_page_number }}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% if tag.name in tag %}
+        {% if trips.has_other_pages %}
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+    {% if trips.has_previous %}
+        <li class="pagination-previous"><a class="pagination-pointed-button" href="?page={{ trips.previous_page_number }}" >Previous <span class="show-for-sr">Page</span></a></li>
+        {% else %}
+  <li class="pagination-previous disabled">Previous <span class="show-for-sr">Page</span></li>
+        {% endif %}
+    {% for i in  trips.paginator.page_range %}
+    {% if trips.number == i %}
+  <li class="current"><span class="show-for-sr">You're on page</span> {{ i }}</li>
+        {% else %}
+  <li><a class="pagination-pointed-button" href="?page={{ i }}" aria-label="Page 2">{{ i }}</a></li>
+  {% endif %}
+    {% endfor %}
+    {% if trips.has_next %}
+  <li class="pagination-next"><a class="pagination-pointed-button" href="?page={{ trips.next_page_number }}" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
+        {% endif %}
+</ul>
+    {% endif %}
+    {% endif %}
+
+
+
+
+
+{% endblock %}
+
+{% endblock %}

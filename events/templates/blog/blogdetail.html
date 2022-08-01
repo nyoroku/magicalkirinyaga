@@ -1,0 +1,15 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+ {{ blog.title }}
+ {% endblock %}
+{% block body_block %}
+{% block content %}
+
+<h5 class="blue-text center">{{ blog.title  }}</h5>
+<p class="blue-grey darken-1 medium center">By {{ blog.author }}</p>
+<p class="blue-grey darken-1 center">Posted on {{ blog.publish }}</p>
+    <p class="center"> {{ blog.body|linebreaks }}</p>
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "tour/main.html" %}
+{% block title %}
+
+Add new Accommodation
+
+{% endblock %}
+{% block content %}
+<h1 style="text-align: center">
+{% if object %}
+Edit Place "{{ object.name }}"
+{% else %}
+Add New Accommodation
+{% endif %}
+</h1>
+<div class="module">
+
+<form action="." method="post" id="" data-models-url="#" novalidate enctype="multipart/form-data">
+    <div class="grid-container">
+        <h5>Accommodation info</h5>
+      <table style="background-color: grey">
+          {{ form.media }}
+          {{ form.media.js }}
+{{ form.as_table }}
+      </table>
+        <h5> Add Photos(At Least 6)</h5>
+
+
+    <table>
+{{ stayimages_formset }}
+{{ stayimages_formset.management_form }}
+    </table>
+          <h5>Add Facilities</h5>
+
+
+    <table>
+{{ stayfacilities_formset }}
+{{ stayfacilities_formset.management_form }}
+    </table>
+            <h5>Add Room Type</h5>
+
+
+    <table>
+{{ rooms_formset }}
+{{ rooms_formset.management_form }}
+    </table>
+            <h2>Add Interesting Places Around </h2>
+
+
+    <table>
+{{ stayinterests_formset }}
+{{ stayinterests_formset.management_form }}
+    </table>
+              <h2>Add Terms and Conditions </h2>
+
+
+    <table>
+{{ terms_formset }}
+{{ terms_formset.management_form }}
+    </table>
+          <button type="submit" class="primary button expanded search-button">
+      Save Place
+    </button>
+
+
+    </div>
+{% csrf_token %}
+
+</form>
+
+</div>
+
+
+{% endblock %}
